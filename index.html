@@ -33,168 +33,93 @@ src="graphics/openstack-cloud-software-horizontal-small.png" /></div>
   <img class="hidden" src="graphics/bullet-nofold-dim.gif" alt="" />
   <img class="hidden" src="graphics/bullet-unfold-dim.gif" alt="" />
   <img src="graphics/openstack-cloud-software-vertical-large.png" alt="OpenStack logo" class="cover" />
-  <h1>OpenStack Infra Puppet Overview<br />
+  <h1>PCCI<br />
   <span class="smaller"></span></h1>
   <hr />
   <div class="smaller">Spencer Krum
-    &lt;<a href="mailto:nibz@hp.com">nibz@hp.com</a>&gt;</div>
+    &lt;<a href="mailto:nibz@spencerkrum.com">nibz@spencerkrum.com</a>&gt;</div>
 </div>
 
 <div class="slide">
-  <h1>OpenStack</h1>
+  <h1>PCCI</h1>
 
-  <p>OpenStack Infra: Puppet Things</p>
-  <img src="graphics/puppet_logo.svg" width="400" alt="puppet" />
-  <img src="graphics/openstack-cloud-software-vertical-large.png" alt="OpenStack logo" />
+  <p>Puppet Community Continuous Integration</p>
+  <p>Puppet Community</p>
 
 </div>
 
 <div class="slide">
-  <h1>What this talk is not about:</h1> 
+  <h1>Hardware</h1> 
 
   <ul>
-  <li>Puppet To Deploy Openstack</li>
-  <li>Puppet To Use Openstack</li>
+  <li>Why</li>
+  <li>Stats</li>
+	  <ul>
+	  <li>64 G Ram</li>
+	  <li>Buncha Cores</li>
+	  <li>500 + 35</li>
+	  </ul>
   </ul>
 
 </div>
 
 <div class="slide">
-  <h1>What this talk *is* about:</h1> 
+  <h1>Gen 1</h1> 
 
   <ul>
-  <li>Testing OpenStack</li>
-  <li>Developer Services</li>
-  <li>Puppet as a sysadmin</li>
+  <li>Script would read PRs</li>
+  <li>Fire virtualbox and beaker</li>
+  <li>Apache results directory</li>
+  <li>Comment on PR's</li>
+
   </ul>
 
 </div>
 
 
 <div class="slide">
-  <h1>Agenda</h1>
+  <h1>Gen 2</h1>
 
   <ol>
-<li>Briefly introduce the scope and responsibilities of -infra</li>
+<li>Beaker Hypervisor for Libvirt - Much better performance</li>
 
-<li>Introduce the physical/virtual, longlived/ephemeral resources behind -infra</li>
+<li>CI Dots (like travis) for Github instead of comments</li>
 
-<li>Discuss the high level layout of where puppet is used</li>
+<li>Primitive Web interface</li>
 
-<li>Discuss puppet master/puppet run/code deploy architecture</li>
-
-<li>Dig into four cool things about -infra</li>
+  </ol>
 
 
 </div>
 
 <div class="slide">
-  <h1>What this talk *is* about:</h1> 
+  <h1>Gen 3</h1> 
 
   <ol>
-  <li>roles</li>
-  <li>hiera</li>
-  <li>project-config</li>
-  <li>apply test</li>
+  <li>CSS! Beautiful web interface</li>
+  <li>Run Tests on Ubuntu and Centos</li>
   </ol>
 
 </div>
 
 <div class="slide">
-  <h1>What is Infra</h1>
+  <h1>Next</h1>
 
 <ul>
-  <li>Names</li>
-  <li>Who</li>
-  <li>Developer Infra</li>
-    <ul>
-      <li>Gerrit</li>
-      <li>Mailing Lists</li>
-      <li>Bug Tracker (kinda)</li>
-    </ul>
-  <li>Testing</li>
-    <ul>
-      <li>Jenkins</li>
-      <li>Zuul</li>
-    </ul>
-  <li>Toolsmiths</li>
-  <li>Administrative</li>
+  <li>Move off redis</li>
+  <li>CI reporting</li>
+  <li>User opt-in</li>
+  <li>Multi- Hardware</li>
+  <li>Many more operating systems</li>
 </ul>
 </div>
 
-<div class="slide">
-  <h1>What does the Infra Look like?</h1>
 
-<ul>
-  <li>Mixture of static and dynamic</li>
-  <li>100% Cloud (HP and Rackspace)</li>
-  <li>Static Virtual Machines</li>
-    <ul>
-      <li>Gerrit</li>
-      <li>Jenkins</li>
-      <li>AFS Servers</li>
-      <li>~30</li>
-    </ul>
-  <li>Dynamic Virtual Machines</li>
-    <ul>
-      <li>Every test gets its own server</li>
-      <li>Spun up and down dynamically</li>
-      <li>20K/day at peak times</li>
-    </ul>
-</ul>
+<div class="slide">
+  <h1>Demo</h1>
 
 </div>
 
-<div class="slide">
-  <h1>Where is Puppet Used?</h1>
-
-  <ul>
-    <li>Config mgmt of long lived hosts</li>
-    <li>Initial configuration of a prototype test server, imaged, replicated</li>
-  <ul>
-
-</div>
-
-<div class="slide">
-  <h1>Where is Puppet *not* Used?</h1>
-
-  <ul>
-    <li>Spinning up VMs</li>
-    <li>Orchestration</li>
-  <ul>
-
-</div>
-
-<div class="slide">
-  <h1>Puppet Master Overview</h1>
-
-  <ul>
-    <li>Puppet 3.7 Master (just one)</li>
-    <li>Open Internet(Get Mad)[heartbleed was sadness]</li>
-    <li>PuppetDB server and PuppetBoard</li>
-    <li>Certs are generated on the puppetmaster and pushed out with launch_node.py</li>
-    <li>Cron job runs ansible to hit servers to run puppet agent</li>
-    <li>Two groups of servers, ansible orchestrates</li>
-    <li>Code is in gerrit, cron job pulls code</li>
-    <li>Same cron runs install_modules.sh</li>
-    <li>One 'main' repo called system-config, ~60 modules in git</li>
-    <li>Comming Soon: ansible ssh's out and puppet apply's</li>
-    <li>Comming Soon: forge deploys</li>
-  </ul>
-
-</div>
-
-<div class="slide">
-  <h1>What this talk *is* about:</h1> 
-
-  <ol>
-  <li>hiera: show site.pp</li>
-  <li>roles: show o_p::*</li>
-  <li>project-config: show how zuul config gets populated</li>
-  <li>apply test: show apply test</li>
-  </ol>
-
-</div>
 
 <div class="slide">
   <h1>Thanks!</h1>
@@ -203,7 +128,7 @@ src="graphics/openstack-cloud-software-horizontal-small.png" /></div>
 
   <p>
     THANKS!
-    These slides available at: <a href="http://docs.openstack.org/infra/publications/">http://docs.openstack.org/infra/publications/</a>
+    These slides available at: <a href="https://github.com/nibalizer/puppet-community-talks">https://github.com/nibalizer/puppet-community-talks</a>
   </p>
 
 </div>
